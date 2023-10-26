@@ -2,6 +2,7 @@
 using Fall2020_CSC403_Project.Properties;
 using System;
 using System.Drawing;
+using System.Drawing.Printing;
 using System.Media;
 using System.Windows.Forms;
 
@@ -32,13 +33,15 @@ namespace Fall2020_CSC403_Project {
     }
 
     public void SetupForBossBattle() {
+    
       picBossBattle.Location = Point.Empty;
       picBossBattle.Size = ClientSize;
       picBossBattle.Visible = true;
 
+      MusicSettings.StopBackgroundMusic();
       SoundPlayer simpleSound = new SoundPlayer(Resources.final_battle);
       simpleSound.Play();
-
+      //MusicSettings.PlayBackgroundMusic();
       tmrFinalBattle.Enabled = true;
     }
 
@@ -87,6 +90,14 @@ namespace Fall2020_CSC403_Project {
     private void tmrFinalBattle_Tick(object sender, EventArgs e) {
       picBossBattle.Visible = false;
       tmrFinalBattle.Enabled = false;
+      MusicSettings.PlayBackgroundMusic();
+
     }
-  }
+
+        private void FleeButton_Click(object sender, EventArgs e)
+        {
+            instance = null;
+            Close();
+        }
+    }
 }
