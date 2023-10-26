@@ -16,7 +16,7 @@ namespace Fall2020_CSC403_Project
         static MusicSettings()
         {
             // Initialize the background music player
-            bgMusicPlayer = new System.Media.SoundPlayer(Resources.PolyphiaPlayingGod); // Replace with the actual resource name
+            bgMusicPlayer = new System.Media.SoundPlayer(Resources.ShootToThrill); // Replace with the actual resource name
         }
         public static void PlayBackgroundMusic()
         {
