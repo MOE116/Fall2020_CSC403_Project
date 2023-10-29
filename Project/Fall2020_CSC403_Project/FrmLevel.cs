@@ -106,17 +106,37 @@ namespace Fall2020_CSC403_Project {
       return you.Collider.Intersects(other.Collider);
     }
 
-    private void Fight(Enemy enemy) {
-      player.ResetMoveSpeed();
-      player.MoveBack();
-      frmBattle = FrmBattle.GetInstance(enemy);
-      frmBattle.Show();
+        private void Fight(Enemy enemy) {
+            player.ResetMoveSpeed();
+            player.MoveBack();
+            frmBattle = FrmBattle.GetInstance(enemy);
+            frmBattle.Show();
 
-      if (enemy == bossKoolaid) {
-        frmBattle.SetupForBossBattle();
-      }
-    }
+            if (enemy == bossKoolaid) {
+                frmBattle.SetupForBossBattle();
+            }
 
+
+            frmBattle.FormClosed += (s, ev) =>  // Make Enemy disappear
+            {
+                if (player.Health > 0 && enemy.Health <= 0)
+                {
+                    if (enemy == bossKoolaid)
+                    {
+                        picBossKoolAid.Hide(); // Hides the bossKoolaid character
+                    }
+                    else if (enemy == enemyPoisonPacket)
+                    {
+                        picEnemyPoisonPacket.Hide(); // Hides the enemyPoisonPacket character
+                    }
+                    else if (enemy == enemyCheeto)
+                    {
+                        picEnemyCheeto.Hide(); // Hides the enemyCheeto character
+                    }
+                }
+
+            };
+        }
     private void FrmLevel_KeyDown(object sender, KeyEventArgs e) {
       switch (e.KeyCode) {
         case Keys.Left:
