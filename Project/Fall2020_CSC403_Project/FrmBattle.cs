@@ -10,8 +10,9 @@ namespace Fall2020_CSC403_Project {
     public static FrmBattle instance = null;
     private Enemy enemy;
     private Player player;
+        private int healCount = 0;   //Heal count for heal button added
 
-    private FrmBattle() {
+        private FrmBattle() {
       InitializeComponent();
       player = Game.player;
     }
@@ -88,5 +89,19 @@ namespace Fall2020_CSC403_Project {
       picBossBattle.Visible = false;
       tmrFinalBattle.Enabled = false;
     }
-  }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (healCount < 5)
+            {
+                if (player.Health < player.MaxHealth)
+                {
+                    player.AlterHealth(5);
+                    UpdateHealthBars();
+                    healCount++;
+
+                }
+            }
+        }
+    }
 }
