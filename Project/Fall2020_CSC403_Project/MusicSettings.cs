@@ -20,7 +20,7 @@ namespace Fall2020_CSC403_Project
         }
         public static void PlayBackgroundMusic()
         {
-            if (bgMusicPlayer != null && !isBackgroundMusicPlaying)
+            if (bgMusicPlayer != null && !isBackgroundMusicPlaying )
             {
                 bgMusicPlayer.PlayLooping();
                 isBackgroundMusicPlaying = true;
@@ -28,7 +28,7 @@ namespace Fall2020_CSC403_Project
         }
         public static void StopBackgroundMusic()
         {
-            if (bgMusicPlayer != null && isBackgroundMusicPlaying)
+            if (bgMusicPlayer != null && isBackgroundMusicPlaying )
             {
                 bgMusicPlayer.Stop();
                 isBackgroundMusicPlaying = false;

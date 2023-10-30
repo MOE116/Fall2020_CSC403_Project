@@ -135,5 +135,15 @@ namespace Fall2020_CSC403_Project
                 }
             }
         }
+
+        private void FrmBattle_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)    //Exit application
+        {
+            Application.Exit();
+        }
     }
 }

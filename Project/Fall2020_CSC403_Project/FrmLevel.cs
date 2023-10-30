@@ -16,7 +16,10 @@ namespace Fall2020_CSC403_Project {
 
     private DateTime timeBegin;
     private FrmBattle frmBattle;
-    private FrmTutorial frmTutorial;       //Tutorial form
+    private bool isPaused = false;         // Pause button
+    private FrmTutorial frmTutorial;
+    private static bool isBackgroundMusicPlaying = false;
+        //Tutorial form
         public FrmLevel()
     {
        InitializeComponent();
@@ -27,10 +30,11 @@ namespace Fall2020_CSC403_Project {
 
             MusicSettings.PlayBackgroundMusic();
 
-      player = new Player(CreatePosition(picPlayer), CreateCollider(picPlayer, PADDING));
-      bossKoolaid = new Enemy(CreatePosition(picBossKoolAid), CreateCollider(picBossKoolAid, PADDING));
-      enemyPoisonPacket = new Enemy(CreatePosition(picEnemyPoisonPacket), CreateCollider(picEnemyPoisonPacket, PADDING));
-      enemyCheeto = new Enemy(CreatePosition(picEnemyCheeto), CreateCollider(picEnemyCheeto, PADDING));
+                player = new Player(CreatePosition(picPlayer), CreateCollider(picPlayer, PADDING));
+                bossKoolaid = new Enemy(CreatePosition(picBossKoolAid), CreateCollider(picBossKoolAid, PADDING));
+                enemyPoisonPacket = new Enemy(CreatePosition(picEnemyPoisonPacket), CreateCollider(picEnemyPoisonPacket, PADDING));
+                enemyCheeto = new Enemy(CreatePosition(picEnemyCheeto), CreateCollider(picEnemyCheeto, PADDING));
+       
 
       bossKoolaid.Img = picBossKoolAid.BackgroundImage;
       enemyPoisonPacket.Img = picEnemyPoisonPacket.BackgroundImage;
@@ -144,7 +148,24 @@ namespace Fall2020_CSC403_Project {
 
             };
         }
-    private void FrmLevel_KeyDown(object sender, KeyEventArgs e) {
+        protected override bool ProcessCmdKey(ref Message msg, Keys keydata)     //Movement change
+        {
+            player.ResetMoveSpeed();
+
+            switch (keydata)
+            {
+                case Keys.Left: player.GoLeft(); break;
+                case Keys.Right: player.GoRight(); break;
+                case Keys.Up: player.GoUp(); break;
+                case Keys.Down: player.GoDown(); break;
+            }
+
+            return true;
+        }
+
+
+
+        private void FrmLevel_KeyDown(object sender, KeyEventArgs e) {
       switch (e.KeyCode) {
         case Keys.Left:
           player.GoLeft();
@@ -166,10 +187,30 @@ namespace Fall2020_CSC403_Project {
           player.ResetMoveSpeed();
           break;
       }
-    }
+    }  
 
     private void lblInGameTime_Click(object sender, EventArgs e) {
 
     }
-  }
+       
+
+        private void button1_Click(object sender, EventArgs e)              //Pause button
+        {
+            if (!isPaused)
+            {
+                tmrUpdateInGameTime.Stop();
+
+                tmrPlayerMove.Stop();
+                button1.Text = "PLAY";
+            }
+            else
+            {
+                tmrUpdateInGameTime.Start();
+                tmrPlayerMove.Start();
+                button1.Text = "PAUSE";
+            }
+            isPaused = !isPaused;
+        }
+
+    }
 }
