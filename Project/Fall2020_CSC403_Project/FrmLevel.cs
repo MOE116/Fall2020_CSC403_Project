@@ -16,14 +16,16 @@ namespace Fall2020_CSC403_Project {
 
     private DateTime timeBegin;
     private FrmBattle frmBattle;
-    public FrmLevel()
+    private FrmTutorial frmTutorial;       //Tutorial form
+        public FrmLevel()
     {
        InitializeComponent();
     }
       private void FrmLevel_Load(object sender, EventArgs e) {
       const int PADDING = 7;
       const int NUM_WALLS = 13;
-      MusicSettings.PlayBackgroundMusic();
+
+            MusicSettings.PlayBackgroundMusic();
 
       player = new Player(CreatePosition(picPlayer), CreateCollider(picPlayer, PADDING));
       bossKoolaid = new Enemy(CreatePosition(picBossKoolAid), CreateCollider(picBossKoolAid, PADDING));
@@ -46,7 +48,12 @@ namespace Fall2020_CSC403_Project {
 
       Game.player = player;
       timeBegin = DateTime.Now;
-    }
+
+            frmTutorial = new FrmTutorial();                   // Tutorial Form
+            frmTutorial.TopMost = true;
+            frmTutorial.Show();
+
+        }
     
     private Vector2 CreatePosition(PictureBox pic) {
       return new Vector2(pic.Location.X, pic.Location.Y);

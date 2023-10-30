@@ -73,6 +73,13 @@ namespace Fall2020_CSC403_Project
 
             lblPlayerHealthFull.Text = player.Health.ToString();
             lblEnemyHealthFull.Text = enemy.Health.ToString();
+
+            if (playerHealthPer < 0.3)                                         // Health Warning
+            {
+                MessageBox.Show("Warning: Low health!");
+
+            }
+
         }
 
         private void btnAttack_Click(object sender, EventArgs e)
