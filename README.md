@@ -13,5 +13,5 @@ TEAM MEMBERS:-
 4.Sudhakar Reddy gavini
 
 # SPRINT 1 Documentation 
-
-https://docs.google.com/document/d/1TVW-b0fJ3Y2cJ-v8a4_h_GoJXnC6cGA5cMvo1OIwnFo/edit?usp=sharing
+View documentation via the link below:
+https://MOE116.github.io/Documentation-Test/
