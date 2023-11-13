@@ -10,7 +10,7 @@ TEAM MEMBERS:-
 
 3.Trivikram Devineni
 
-4.Sudhakar Reddy gavini
+4.Sudhakar Reddy Gavini
 
 # SPRINT 1 Documentation 
 View documentation via the link below:
