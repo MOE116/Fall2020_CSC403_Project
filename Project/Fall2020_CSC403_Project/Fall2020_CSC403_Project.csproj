@@ -132,6 +132,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="data\AdBatman.jpg" />
+    <Content Include="data\AdJBL.png" />
+    <Content Include="data\Adwinter2.jpg" />
     <Content Include="data\PolyphiaPlayingGod.wav" />
     <Content Include="data\ShootToThrill.wav" />
   </ItemGroup>
