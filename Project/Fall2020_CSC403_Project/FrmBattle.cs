@@ -130,7 +130,7 @@ namespace Fall2020_CSC403_Project
         {
             picBossBattle.Visible = false;
             tmrFinalBattle.Enabled = false;
-            MusicSettings.PlayBackgroundMusic();
+            MusicSettings.PlayBackgroundMusicLevel();
 
             string val = BackColor.Name.ToString();
             if (val == "Red")
