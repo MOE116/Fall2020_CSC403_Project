@@ -49,7 +49,7 @@ namespace Fall2020_CSC403_Project
         private void StartBtn_Click(object sender, EventArgs e)
         {
             // Create and show the FrmLevel form when the "Start Game" button is clicked.
-            FrmLevel levelForm = new FrmLevel();
+            FrmLevel levelForm = new FrmLevel(this);
             levelForm.Show();
             this.Hide(); // Hide the main menu form
         }
