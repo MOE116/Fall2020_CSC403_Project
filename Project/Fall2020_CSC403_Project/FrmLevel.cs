@@ -4,6 +4,9 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Media;
+using System.Diagnostics;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Fall2020_CSC403_Project {
   public partial class FrmLevel : Form {
@@ -13,20 +16,23 @@ namespace Fall2020_CSC403_Project {
     private Enemy bossKoolaid;
     private Enemy enemyCheeto;
     private Character[] walls;
-
-    private DateTime timeBegin;
+        private bool hasKnife = false;
+        private DateTime timeBegin;
     private FrmBattle frmBattle;
     private bool isPaused = false;         // Pause button
     private FrmTutorial frmTutorial;
     private static bool isBackgroundMusicPlaying = false;
+   
+
+
         //Tutorial form
         public FrmLevel()
     {
        InitializeComponent();
-    }
+        }
       private void FrmLevel_Load(object sender, EventArgs e) {
       const int PADDING = 7;
-      const int NUM_WALLS = 13;
+      const int NUM_WALLS = 19;
 
             MusicSettings.PlayBackgroundMusic();
 
@@ -44,15 +50,34 @@ namespace Fall2020_CSC403_Project {
       enemyPoisonPacket.Color = Color.Green;
       enemyCheeto.Color = Color.MediumPurple;
 
-      //enemyCheeto.Color = Color.FromArgb(255, 245, 161);
+            //enemyCheeto.Color = Color.FromArgb(255, 245, 161);
 
-      walls = new Character[NUM_WALLS];
-      for (int w = 0; w < NUM_WALLS; w++) {
-        PictureBox pic = Controls.Find("picWall" + w.ToString(), true)[0] as PictureBox;
-        walls[w] = new Character(CreatePosition(pic), CreateCollider(pic, PADDING));
-      }
+            walls = new Character[NUM_WALLS];
 
-      Game.player = player;
+            // Loop over control names that could represent walls
+            string[] wallNames = new string[] {
+    "picWall0", "picWall1", "picWall2", "picWall3", "picWall4", "picWall5",
+    "picWall6", "picWall7", "picWall8", "picWall9", "picWall10", "picWall11",
+    "picWall14", "pictureBox1", "pictureBox2", "pictureBox4", "picWall12", "pictureBox3"
+};
+
+            for (int w = 0, index = 0; w < wallNames.Length; w++)
+            {
+                Control[] foundControls = Controls.Find(wallNames[w], true);
+                if (foundControls.Length > 0)
+                {
+                    PictureBox pic = foundControls[0] as PictureBox;
+                    walls[index++] = new Character(CreatePosition(pic), CreateCollider(pic, PADDING));
+                }
+                else
+                {
+                    // Log or handle the case where a PictureBox is not found
+                    Debug.WriteLine("PictureBox not found: " + wallNames[w]);
+                }
+            }
+
+
+            Game.player = player;
       timeBegin = DateTime.Now;
 
             frmTutorial = new FrmTutorial();                   // Tutorial Form
@@ -102,33 +127,54 @@ namespace Fall2020_CSC403_Project {
 
       // update player's picture box
       picPlayer.Location = new Point((int)player.Position.x, (int)player.Position.y);
-    }
-
-    private bool HitAWall(Character c) {
-      bool hitAWall = false;
-      for (int w = 0; w < walls.Length; w++) {
-        if (c.Collider.Intersects(walls[w].Collider)) {
-          hitAWall = true;
-          break;
+            if (!hasKnife && picPlayer.Bounds.IntersectsWith(picKnife.Bounds))
+            {
+                PickUpKnife();
+            }
         }
-      }
-      return hitAWall;
-    }
+        private void PickUpKnife()
+        {
+            hasKnife = true;
+            picKnife.Visible = false; // Hide the knife from the game world
+            player.AttackPower += 0.5f; // Increase attack power
+            MessageBox.Show("You picked up the knife! Your attack power has increased.", "Knife Acquired", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
 
-    private bool HitAChar(Character you, Character other) {
-      return you.Collider.Intersects(other.Collider);
-    }
 
-        private void Fight(Enemy enemy) {
+
+        private bool HitAWall(Character c)
+        {
+            if (c == null || c.Collider == null)
+            {
+                return false;
+            }
+
+            for (int w = 0; w < walls.Length; w++)
+            {
+                if (walls[w] != null && walls[w].Collider != null && c.Collider.Intersects(walls[w].Collider))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+
+        private bool HitAChar(Character you, Character other) {
+            return other != null && you.Collider.Intersects(other.Collider);
+        }
+
+        private void Fight(Enemy enemy)
+        {
             player.ResetMoveSpeed();
             player.MoveBack();
             frmBattle = FrmBattle.GetInstance(enemy);
             frmBattle.Show();
 
-            if (enemy == bossKoolaid) {
+            if (enemy == bossKoolaid)
+            {
                 frmBattle.SetupForBossBattle();
             }
-
 
             frmBattle.FormClosed += (s, ev) =>  // Make Enemy disappear
             {
@@ -136,20 +182,29 @@ namespace Fall2020_CSC403_Project {
                 {
                     if (enemy == bossKoolaid)
                     {
-                        picBossKoolAid.Hide(); // Hides the bossKoolaid character
+                        RemoveEnemy(picBossKoolAid);
+                        bossKoolaid = null;
                     }
                     else if (enemy == enemyPoisonPacket)
                     {
-                        picEnemyPoisonPacket.Hide(); // Hides the enemyPoisonPacket character
+                        RemoveEnemy(picEnemyPoisonPacket);
+                        enemyPoisonPacket = null;
                     }
                     else if (enemy == enemyCheeto)
                     {
-                        picEnemyCheeto.Hide(); // Hides the enemyCheeto character
+                        RemoveEnemy(picEnemyCheeto);
+                        enemyCheeto = null;
                     }
                 }
-
             };
         }
+
+        private void RemoveEnemy(PictureBox enemyPic)
+        {
+            this.Controls.Remove(enemyPic);
+            enemyPic.Dispose();
+        }
+
         protected override bool ProcessCmdKey(ref Message msg, Keys keydata)     //Movement change
         {
             player.ResetMoveSpeed();
@@ -167,31 +222,35 @@ namespace Fall2020_CSC403_Project {
 
 
 
-        private void FrmLevel_KeyDown(object sender, KeyEventArgs e) {
-      switch (e.KeyCode) {
-        case Keys.Left:
-          player.GoLeft();
-          break;
+        private void FrmLevel_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Left:
+                    player.GoLeft();
+                    break;
 
-        case Keys.Right:
-          player.GoRight();
-          break;
+                case Keys.Right:
+                    player.GoRight();
+                    break;
 
-        case Keys.Up:
-          player.GoUp();
-          break;
+                case Keys.Up:
+                    player.GoUp();
+                    break;
 
-        case Keys.Down:
-          player.GoDown();
-          break;
+                case Keys.Down:
+                    player.GoDown();
+                    break;
 
-        default:
-          player.ResetMoveSpeed();
-          break;
-      }
-    }  
+                default:
+                    player.ResetMoveSpeed();
+                    break;
+            
+            }
+        }
 
-    private void lblInGameTime_Click(object sender, EventArgs e) {
+
+        private void lblInGameTime_Click(object sender, EventArgs e) {
 
     }
        

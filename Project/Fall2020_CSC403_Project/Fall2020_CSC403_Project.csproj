@@ -110,7 +110,7 @@
     <None Include="data\battle_screen.fw.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="data\wall.jpg" />
+    <None Include="data\wallold.jpg" />
   </ItemGroup>
   <ItemGroup>
     <None Include="data\enemy_cheetos.fw.png" />
@@ -137,6 +137,7 @@
     <Content Include="data\Adwinter2.jpg" />
     <Content Include="data\PolyphiaPlayingGod.wav" />
     <Content Include="data\ShootToThrill.wav" />
+    <Content Include="data\wall.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
