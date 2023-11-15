@@ -102,10 +102,14 @@ namespace Fall2020_CSC403_Project
 
         private void btnAttack_Click(object sender, EventArgs e)
         {
-            player.OnAttack(-4);
+            // base damage value for the player
+            int basePlayerDamage = -4;
+            int playerDamageWithKnife = (int)(basePlayerDamage * player.AttackPower);
+
+            player.OnAttack(playerDamageWithKnife);
             if (enemy.Health > 0)
             {
-                enemy.OnAttack(-2);
+                enemy.OnAttack(-2); // Enemy's attack
             }
 
             UpdateHealthBars();
@@ -115,6 +119,7 @@ namespace Fall2020_CSC403_Project
                 Close();
             }
         }
+
 
         private void EnemyDamage(int amount)
         {
@@ -222,7 +227,7 @@ namespace Fall2020_CSC403_Project
         {
             if (player.Health < player.MaxHealth)
             {
-                player.AlterHealth(5);
+                player.AlterHealth(4);
                 UpdateHealthBars();
                 healCount++;
 
