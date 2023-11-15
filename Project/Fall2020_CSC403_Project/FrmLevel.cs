@@ -59,9 +59,6 @@ namespace Fall2020_CSC403_Project
             Game.player = player;
             timeBegin = DateTime.Now;
 
-            frmTutorial = new FrmTutorial();                   // Tutorial Form
-            frmTutorial.TopMost = true;
-            frmTutorial.Show();
 
         }
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Drawing;
+using System.Drawing; 
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -52,6 +52,13 @@ namespace Fall2020_CSC403_Project
             FrmLevel levelForm = new FrmLevel();
             levelForm.Show();
             this.Hide(); // Hide the main menu form
+        }
+
+        private void Tutorial_Click(object sender, EventArgs e)
+        {
+            // Create and show the FrmLevel form when the "Tutorial" button is clicked.
+            FrmTutorial levelForm = new FrmTutorial ();
+            levelForm.Show();
         }
     }
 
