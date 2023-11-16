@@ -18,20 +18,15 @@ namespace Fall2020_CSC403_Project {
         private FrmBattle frmbattle;
     private Enemy enemyCheeto;
     private Character[] walls;
-        private bool hasKnife = false;
+        private bool hasKnife = false;                                                  //Knife Value
         private DateTime timeBegin;
     private FrmBattle frmBattle;
-    private bool isPaused = false;         // Pause button
-    public StopwatchHelper stopwatchHelper;// for pausing timer
+    private bool isPaused = false;                                                      // Pause button
+    public StopwatchHelper stopwatchHelper;                                             // for pausing timer
     private FrmTutorial frmTutorial;
     private static bool isBackgroundMusicPlaying = false;
     private FrmMainMenu mainMenuForm; // Add a reference to the FrmMainMenu form
         
-
-
-
-
-        //Tutorial form
         public FrmLevel(FrmMainMenu mainMenuForm)
         {
             InitializeComponent();
@@ -44,8 +39,8 @@ namespace Fall2020_CSC403_Project {
         }
         private void FrmLevel_FormClosing(object sender, FormClosingEventArgs e)
     {
-        // Stop background music and close the FrmMainMenu form when FrmLevel is closing
-        MusicSettings.StopBackgroundMusic();
+        
+        MusicSettings.StopBackgroundMusic(); // Stops background music and close the FrmMainMenu form when FrmLevel is closing
         mainMenuForm.Close();
     }
       private void FrmLevel_Load(object sender, EventArgs e) {
@@ -160,8 +155,8 @@ namespace Fall2020_CSC403_Project {
         private void PickUpKnife()
         {
             hasKnife = true;
-            picKnife.Visible = false; // Hide the knife from the game world
-            player.AttackPower += 0.5f; // Increase attack power
+            picKnife.Visible = false; // Hides the knife from the game world
+            player.AttackPower += 0.5f; // Increases attack power
             MessageBox.Show("You picked up the knife! Your attack power has increased.", "Knife Acquired", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 

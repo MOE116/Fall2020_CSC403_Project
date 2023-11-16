@@ -33,23 +33,23 @@ namespace Fall2020_CSC403_Project
 
         private void FrmMainMenu_Load(object sender, EventArgs e)
         {
-            // Start the timer when the form loads
+            // Starts the timer when the form loads
             scrollTimer.Start();
-            // Play background music for the main menu
+            // Plays background music for the main menu
             MusicSettings.StopBackgroundMusic();
             MusicSettings.PlayBackgroundMusicMainMenu();
         }
         private void scrollTimer_Tick(object sender, EventArgs e)
         {
-            // Display the current line in the TextBox
+            // Displays the current line in the TextBox
             textBox1.Text = lines[currentLine];
 
-            // Increment the current line index and loop back to the first line if at the end
+            // Increments the current line index and loop back to the first line if at the end
             currentLine = (currentLine + 1) % lines.Length;
         }
         private void StartBtn_Click(object sender, EventArgs e)
         {
-            // Create and show the FrmLevel form when the "Start Game" button is clicked.
+            // Creates and show the FrmLevel form when the "Start Game" button is clicked.
             FrmLevel levelForm = new FrmLevel(this);
             levelForm.Show();
             this.Hide(); // Hide the main menu form

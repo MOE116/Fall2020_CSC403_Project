@@ -180,7 +180,7 @@ namespace Fall2020_CSC403_Project
             }
             else
             {
-                // When you reach the end of the list, reset the index to start over.
+                
                 currentIndex = 0;
             }
             if (AdClose.Text == "X")
@@ -225,17 +225,17 @@ namespace Fall2020_CSC403_Project
 
         private void advertisingPanel_Click(object sender, EventArgs e)
         {
-            // Specify the URL you want to open in the default web browser
+            // URL you want to open in the default web browser
 
 
             try
             {
-                // Open the default web browser with the specified URL
+                // Opens the default web browser with the specified URL
                 System.Diagnostics.Process.Start(urlToOpen);
             }
             catch (Exception ex)
             {
-                // Handle any exceptions that might occur when opening the web browser
+                // Handles any exceptions that might occur when opening the web browser
                 MessageBox.Show("An error occurred while opening the web browser: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -249,7 +249,7 @@ namespace Fall2020_CSC403_Project
             Close();
          }
 
-        private void Healbtn_Click(object sender, EventArgs e)
+        private void Healbtn_Click(object sender, EventArgs e) //Heal button Functionality
         {
             if (healCount < 5 && Game.player.Health < Game.player.MaxHealth)
             {
