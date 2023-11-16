@@ -32,6 +32,12 @@ namespace Fall2020_CSC403_Project {
             InitializeComponent();
             this.mainMenuForm = mainMenuForm; // Initialize the reference to FrmMainMenu
         }
+    private void FrmLevel_FormClosing(object sender, FormClosingEventArgs e)
+    {
+        // Stop background music and close the FrmMainMenu form when FrmLevel is closing
+        MusicSettings.StopBackgroundMusic();
+        mainMenuForm.Close();
+    }
       private void FrmLevel_Load(object sender, EventArgs e) {
       const int PADDING = 7;
       const int NUM_WALLS = 19;
