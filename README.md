@@ -12,6 +12,6 @@ TEAM MEMBERS:-
 
 4.Sudhakar Reddy Gavini
 
-# SPRINT 1 Documentation 
+# SPRINT  Documentation 
 View documentation via the link below:
 https://MOE116.github.io/Documentation-Test/
