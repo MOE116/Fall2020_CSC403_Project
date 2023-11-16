@@ -22,6 +22,7 @@ namespace Fall2020_CSC403_Project {
     private bool isPaused = false;         // Pause button
     private FrmTutorial frmTutorial;
     private static bool isBackgroundMusicPlaying = false;
+        public static FrmLevel frmlevel;
    
 
 
@@ -29,6 +30,7 @@ namespace Fall2020_CSC403_Project {
         public FrmLevel()
     {
        InitializeComponent();
+            frmlevel = this;
        stopwatchHelper = new StopwatchHelper();
        stopwatchHelper.Start();
         }
@@ -81,6 +83,7 @@ namespace Fall2020_CSC403_Project {
 
             Game.player = player;
       timeBegin = DateTime.Now;
+            UpdatePlayerStatus(20, 20);        //player health bar level.cs
 
             frmTutorial = new FrmTutorial();                   // Tutorial Form
             frmTutorial.TopMost = true;
@@ -199,12 +202,15 @@ namespace Fall2020_CSC403_Project {
                     }
                 }
             };
+            UpdatePlayerStatus(player.Health, player.MaxHealth);
+
         }
 
         private void RemoveEnemy(PictureBox enemyPic)
         {
             this.Controls.Remove(enemyPic);
             enemyPic.Dispose();
+
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keydata)     //Movement change
@@ -220,6 +226,13 @@ namespace Fall2020_CSC403_Project {
             }
 
             return true;
+        }
+        public void UpdatePlayerStatus(int Health, int MaxHealth)
+        {
+            float playerHealthPer = Health / (float)MaxHealth;
+            const int MAX_HEALTHBAR_WIDTH = 151;
+            lblPlayerHealthFull.Width = (int)(MAX_HEALTHBAR_WIDTH * playerHealthPer);
+            lblPlayerHealthFull.Text = "" + Health.ToString();
         }
 
 

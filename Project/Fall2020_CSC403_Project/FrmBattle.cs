@@ -143,6 +143,8 @@ namespace Fall2020_CSC403_Project
         private void PlayerDamage(int amount)
         {
             player.AlterHealth(amount);
+            FrmLevel.frmlevel.UpdatePlayerStatus(player.Health, player.MaxHealth);
+
         }
 
         private void tmrFinalBattle_Tick(object sender, EventArgs e)
@@ -244,15 +246,21 @@ namespace Fall2020_CSC403_Project
                 player.AlterHealth(4);
                 UpdateHealthBars();
                 healCount++;
+            }
+                FrmLevel.frmlevel.UpdatePlayerStatus(player.Health, player.MaxHealth);
 
             }
-        }
         }
 
         private void FrmBattle_Load(object sender, EventArgs e)
         {
 
         }
+        private void FrmBattle_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            FrmLevel.frmlevel.UpdatePlayerStatus(player.Health, player.MaxHealth);
+        }
+
 
         private void button1_Click(object sender, EventArgs e)    //Exit application
         {
