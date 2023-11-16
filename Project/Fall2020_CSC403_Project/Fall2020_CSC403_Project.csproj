@@ -73,6 +73,7 @@
     <Compile Include="MusicSettings.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StopwatchHelper.cs" />
     <EmbeddedResource Include="FrmGameOver.resx">
       <DependentUpon>FrmGameOver.cs</DependentUpon>
     </EmbeddedResource>

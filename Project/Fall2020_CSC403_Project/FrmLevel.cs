@@ -11,7 +11,7 @@ using System.Linq;
 namespace Fall2020_CSC403_Project {
   public partial class FrmLevel : Form {
     private Player player;
-      
+    private StopwatchHelper stopwatchHelper;
     private Enemy enemyPoisonPacket;
     private Enemy bossKoolaid;
     private Enemy enemyCheeto;
@@ -29,6 +29,8 @@ namespace Fall2020_CSC403_Project {
         public FrmLevel()
     {
        InitializeComponent();
+       stopwatchHelper = new StopwatchHelper();
+       stopwatchHelper.Start();
         }
       private void FrmLevel_Load(object sender, EventArgs e) {
       const int PADDING = 7;
@@ -100,12 +102,12 @@ namespace Fall2020_CSC403_Project {
     }
 
     private void tmrUpdateInGameTime_Tick(object sender, EventArgs e) {
-      TimeSpan span = DateTime.Now - timeBegin;
-      string time = span.ToString(@"hh\:mm\:ss");
-      lblInGameTime.Text = "Time: " + time.ToString();
-    }
+    string elapsedTimeString = stopwatchHelper.GetElapsedTimeString(); //stopwatchHelper.Reset();
+    lblInGameTime.Text = "Time: " + elapsedTimeString;
 
-    private void tmrPlayerMove_Tick(object sender, EventArgs e) {
+        }
+
+        private void tmrPlayerMove_Tick(object sender, EventArgs e) {
       // move player
       player.Move();
 
@@ -259,14 +261,13 @@ namespace Fall2020_CSC403_Project {
         {
             if (!isPaused)
             {
-                tmrUpdateInGameTime.Stop();
-
+                stopwatchHelper.Stop();
                 tmrPlayerMove.Stop();
                 button1.Text = "PLAY";
             }
             else
             {
-                tmrUpdateInGameTime.Start();
+                stopwatchHelper.Start();
                 tmrPlayerMove.Start();
                 button1.Text = "PAUSE";
             }
