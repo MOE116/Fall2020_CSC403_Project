@@ -4,49 +4,48 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Media;
+using System.Diagnostics;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace Fall2020_CSC403_Project
-{
-    public partial class FrmLevel : Form
-    {
-        private Player player;
 
-        private Enemy enemyPoisonPacket;
-        private Enemy bossKoolaid;
-        private Enemy enemyCheeto;
-        private Character[] walls;
-
+namespace Fall2020_CSC403_Project {
+  public partial class FrmLevel : Form {
+    private Player player;
+      
+    private Enemy enemyPoisonPacket;
+    private Enemy bossKoolaid;
+    private Enemy enemyCheeto;
+    private Character[] walls;
+        private bool hasKnife = false;
         private DateTime timeBegin;
-        private FrmBattle frmBattle;
-        private bool isPaused = false;         // Pause button
-        private FrmTutorial frmTutorial;
-        private static bool isBackgroundMusicPlaying = false;
-        private FrmMainMenu mainMenuForm; // Add a reference to the FrmMainMenu form
+    private FrmBattle frmBattle;
+    private bool isPaused = false;         // Pause button
+    private FrmTutorial frmTutorial;
+    private static bool isBackgroundMusicPlaying = false;
+    private FrmMainMenu mainMenuForm; // Add a reference to the FrmMainMenu form
+
+
         //Tutorial form
-        //public FrmLevel()
-        //{
-       //     InitializeComponent();
-       // }
         public FrmLevel(FrmMainMenu mainMenuForm)
         {
             InitializeComponent();
             this.mainMenuForm = mainMenuForm; // Initialize the reference to FrmMainMenu
         }
-        private void FrmLevel_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            // Stop background music and close the FrmMainMenu form when FrmLevel is closing
-            MusicSettings.StopBackgroundMusic();
-            mainMenuForm.Close();
-        }
-        private void FrmLevel_Load(object sender, EventArgs e)
-        {
-            const int PADDING = 7;
-            const int NUM_WALLS = 13;
-            
-            MusicSettings.StopBackgroundMusic();
-            MusicSettings.PlayBackgroundMusicLevel();
+    private void FrmLevel_FormClosing(object sender, FormClosingEventArgs e)
+    {
+        // Stop background music and close the FrmMainMenu form when FrmLevel is closing
+        MusicSettings.StopBackgroundMusic();
+        mainMenuForm.Close();
+    }
+      private void FrmLevel_Load(object sender, EventArgs e) {
+      const int PADDING = 7;
+      const int NUM_WALLS = 19;
+        MusicSettings.StopBackgroundMusic();
+        MusicSettings.PlayBackgroundMusicLevel();
             // Wire up the FormClosing event
-            this.FormClosing += FrmLevel_FormClosing;
+            this.FormClosing += FrmLevel_FormClosing;        
+
 
             player = new Player(CreatePosition(picPlayer), CreateCollider(picPlayer, PADDING));
             bossKoolaid = new Enemy(CreatePosition(picBossKoolAid), CreateCollider(picBossKoolAid, PADDING));
@@ -65,14 +64,32 @@ namespace Fall2020_CSC403_Project
             //enemyCheeto.Color = Color.FromArgb(255, 245, 161);
 
             walls = new Character[NUM_WALLS];
-            for (int w = 0; w < NUM_WALLS; w++)
+
+            // Loop over control names that could represent walls
+            string[] wallNames = new string[] {
+    "picWall0", "picWall1", "picWall2", "picWall3", "picWall4", "picWall5",
+    "picWall6", "picWall7", "picWall8", "picWall9", "picWall10", "picWall11",
+    "picWall14", "pictureBox1", "pictureBox2", "pictureBox4", "picWall12", "pictureBox3"
+};
+
+            for (int w = 0, index = 0; w < wallNames.Length; w++)
             {
-                PictureBox pic = Controls.Find("picWall" + w.ToString(), true)[0] as PictureBox;
-                walls[w] = new Character(CreatePosition(pic), CreateCollider(pic, PADDING));
+                Control[] foundControls = Controls.Find(wallNames[w], true);
+                if (foundControls.Length > 0)
+                {
+                    PictureBox pic = foundControls[0] as PictureBox;
+                    walls[index++] = new Character(CreatePosition(pic), CreateCollider(pic, PADDING));
+                }
+                else
+                {
+                    // Log or handle the case where a PictureBox is not found
+                    Debug.WriteLine("PictureBox not found: " + wallNames[w]);
+                }
             }
 
+
             Game.player = player;
-            timeBegin = DateTime.Now;
+      timeBegin = DateTime.Now;
 
             frmTutorial = new FrmTutorial();                   // Tutorial Form
             frmTutorial.TopMost = true;
@@ -96,6 +113,7 @@ namespace Fall2020_CSC403_Project
             player.ResetMoveSpeed();
         }
 
+
         private void tmrUpdateInGameTime_Tick(object sender, EventArgs e)
         {
             TimeSpan span = DateTime.Now - timeBegin;
@@ -103,52 +121,65 @@ namespace Fall2020_CSC403_Project
             lblInGameTime.Text = "Time: " + time.ToString();
         }
 
-        private void tmrPlayerMove_Tick(object sender, EventArgs e)
-        {
-            // move player
-            player.Move();
 
-            // check collision with walls
-            if (HitAWall(player))
-            {
-                player.MoveBack();
-            }
 
-            // check collision with enemies
-            if (HitAChar(player, enemyPoisonPacket))
-            {
-                Fight(enemyPoisonPacket);
-            }
-            else if (HitAChar(player, enemyCheeto))
-            {
-                Fight(enemyCheeto);
-            }
-            if (HitAChar(player, bossKoolaid))
-            {
-                Fight(bossKoolaid);
-            }
+    private void tmrPlayerMove_Tick(object sender, EventArgs e) {
+      // move player
+      player.Move();
 
-            // update player's picture box
-            picPlayer.Location = new Point((int)player.Position.x, (int)player.Position.y);
+      // check collision with walls
+      if (HitAWall(player)) {
+        player.MoveBack();
+      }
+
+      // check collision with enemies
+      if (HitAChar(player, enemyPoisonPacket)) {
+        Fight(enemyPoisonPacket);
+      }
+      else if (HitAChar(player, enemyCheeto)) {
+        Fight(enemyCheeto);
+      }
+      if (HitAChar(player, bossKoolaid)) {
+        Fight(bossKoolaid);
+      }
+
+      // update player's picture box
+      picPlayer.Location = new Point((int)player.Position.x, (int)player.Position.y);
+            if (!hasKnife && picPlayer.Bounds.IntersectsWith(picKnife.Bounds))
+            {
+                PickUpKnife();
+            }
         }
+        private void PickUpKnife()
+        {
+            hasKnife = true;
+            picKnife.Visible = false; // Hide the knife from the game world
+            player.AttackPower += 0.5f; // Increase attack power
+            MessageBox.Show("You picked up the knife! Your attack power has increased.", "Knife Acquired", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+
 
         private bool HitAWall(Character c)
         {
-            bool hitAWall = false;
+            if (c == null || c.Collider == null)
+            {
+                return false;
+            }
+
             for (int w = 0; w < walls.Length; w++)
             {
-                if (c.Collider.Intersects(walls[w].Collider))
+                if (walls[w] != null && walls[w].Collider != null && c.Collider.Intersects(walls[w].Collider))
                 {
-                    hitAWall = true;
-                    break;
+                    return true;
                 }
             }
-            return hitAWall;
+            return false;
         }
 
-        private bool HitAChar(Character you, Character other)
-        {
-            return you.Collider.Intersects(other.Collider);
+
+        private bool HitAChar(Character you, Character other) {
+            return other != null && you.Collider.Intersects(other.Collider);
         }
 
         private void Fight(Enemy enemy)
@@ -163,27 +194,35 @@ namespace Fall2020_CSC403_Project
                 frmBattle.SetupForBossBattle();
             }
 
-
             frmBattle.FormClosed += (s, ev) =>  // Make Enemy disappear
             {
                 if (player.Health > 0 && enemy.Health <= 0)
                 {
                     if (enemy == bossKoolaid)
                     {
-                        picBossKoolAid.Hide(); // Hides the bossKoolaid character
+                        RemoveEnemy(picBossKoolAid);
+                        bossKoolaid = null;
                     }
                     else if (enemy == enemyPoisonPacket)
                     {
-                        picEnemyPoisonPacket.Hide(); // Hides the enemyPoisonPacket character
+                        RemoveEnemy(picEnemyPoisonPacket);
+                        enemyPoisonPacket = null;
                     }
                     else if (enemy == enemyCheeto)
                     {
-                        picEnemyCheeto.Hide(); // Hides the enemyCheeto character
+                        RemoveEnemy(picEnemyCheeto);
+                        enemyCheeto = null;
                     }
                 }
-
             };
         }
+
+        private void RemoveEnemy(PictureBox enemyPic)
+        {
+            this.Controls.Remove(enemyPic);
+            enemyPic.Dispose();
+        }
+
         protected override bool ProcessCmdKey(ref Message msg, Keys keydata)     //Movement change
         {
             player.ResetMoveSpeed();
@@ -231,6 +270,7 @@ namespace Fall2020_CSC403_Project
         {
 
         }
+
 
 
         private void button1_Click(object sender, EventArgs e)              //Pause button
