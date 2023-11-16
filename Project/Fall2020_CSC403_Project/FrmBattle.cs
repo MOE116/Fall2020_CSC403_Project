@@ -115,6 +115,10 @@ namespace Fall2020_CSC403_Project
             }
 
             UpdateHealthBars();
+            if (FrmLevel.frmlevel != null)
+            {
+                FrmLevel.frmlevel.UpdatePlayerStatus(Game.player.Health, Game.player.MaxHealth);
+            }
             if (enemy.Health <= 0)
             {
                 instance = null;
@@ -133,6 +137,7 @@ namespace Fall2020_CSC403_Project
                 gameover = FrmGameOver.GetInstance();
                 gameover.Show();
             }
+
         }
 
 
@@ -143,10 +148,13 @@ namespace Fall2020_CSC403_Project
 
         private void PlayerDamage(int amount)
         {
-            player.AlterHealth(amount);
+            // Apply damage to the player
+            Game.player.AlterHealth(amount);
+
+            // Update player status in FrmLevel if frmlevel is available
             if (FrmLevel.frmlevel != null)
             {
-                FrmLevel.frmlevel.UpdatePlayerStatus(player.Health, player.MaxHealth);
+                FrmLevel.frmlevel.UpdatePlayerStatus(Game.player.Health, Game.player.MaxHealth);
             }
         }
 
@@ -241,17 +249,19 @@ namespace Fall2020_CSC403_Project
             Close();
          }
 
-        private void Healbtn_Click(object sender, EventArgs e)  //Player heal
+        private void Healbtn_Click(object sender, EventArgs e)
         {
-        if (healCount < 5)
-        {
-            if (player.Health < player.MaxHealth)
+            if (healCount < 5 && Game.player.Health < Game.player.MaxHealth)
             {
-                player.AlterHealth(4);
+                Game.player.AlterHealth(4);
                 UpdateHealthBars();
                 healCount++;
-            }
-                FrmLevel.frmlevel.UpdatePlayerStatus(player.Health, player.MaxHealth);
+
+                // Update player status in FrmLevel if frmlevel is available
+                if (FrmLevel.frmlevel != null)
+                {
+                    FrmLevel.frmlevel.UpdatePlayerStatus(Game.player.Health, Game.player.MaxHealth);
+                }
             }
         }
         private void FrmBattle_FormClosing(object sender, FormClosingEventArgs e)

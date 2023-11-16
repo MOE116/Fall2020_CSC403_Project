@@ -12,8 +12,8 @@ using System.Linq;
 namespace Fall2020_CSC403_Project {
   public partial class FrmLevel : Form {
     private Player player;
-      
-    private Enemy enemyPoisonPacket;
+        public static FrmLevel frmlevel = null;                                         // to refer in FrmBattle.cs  
+        private Enemy enemyPoisonPacket;
     private Enemy bossKoolaid;
         private FrmBattle frmbattle;
     private Enemy enemyCheeto;
@@ -26,7 +26,7 @@ namespace Fall2020_CSC403_Project {
     private FrmTutorial frmTutorial;
     private static bool isBackgroundMusicPlaying = false;
     private FrmMainMenu mainMenuForm; // Add a reference to the FrmMainMenu form
-        public static FrmLevel frmlevel = null;                                         // to refer in FrmBattle.cs
+        
 
 
 
@@ -36,8 +36,10 @@ namespace Fall2020_CSC403_Project {
         {
             InitializeComponent();
             this.mainMenuForm = mainMenuForm; // Initialize the reference to FrmMainMenu
+            frmlevel = this;
             stopwatchHelper = new StopwatchHelper();
             stopwatchHelper.Start();
+            
 
         }
         private void FrmLevel_FormClosing(object sender, FormClosingEventArgs e)
@@ -98,9 +100,7 @@ namespace Fall2020_CSC403_Project {
 
             Game.player = player;
             timeBegin = DateTime.Now;
-            frmTutorial = new FrmTutorial();                   // Tutorial Form
-            frmTutorial.TopMost = true;
-            frmTutorial.Show();
+
 
         }
 

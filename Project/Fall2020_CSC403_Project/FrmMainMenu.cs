@@ -54,6 +54,13 @@ namespace Fall2020_CSC403_Project
             levelForm.Show();
             this.Hide(); // Hide the main menu form
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            FrmTutorial tutorialForm = new FrmTutorial();
+            tutorialForm.Show();
+            
+        }
     }
 
 
