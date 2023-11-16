@@ -49,7 +49,7 @@
             // 
             this.btnAttack.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAttack.Location = new System.Drawing.Point(457, 156);
-            this.btnAttack.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnAttack.Margin = new System.Windows.Forms.Padding(4);
             this.btnAttack.Name = "btnAttack";
             this.btnAttack.Size = new System.Drawing.Size(171, 53);
             this.btnAttack.TabIndex = 2;
@@ -104,7 +104,7 @@
             this.picBossBattle.BackgroundImage = global::Fall2020_CSC403_Project.Properties.Resources.battle_screen;
             this.picBossBattle.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.picBossBattle.Location = new System.Drawing.Point(1040, 693);
-            this.picBossBattle.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.picBossBattle.Margin = new System.Windows.Forms.Padding(4);
             this.picBossBattle.Name = "picBossBattle";
             this.picBossBattle.Size = new System.Drawing.Size(40, 33);
             this.picBossBattle.TabIndex = 7;
@@ -118,7 +118,7 @@
             this.picEnemy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.picEnemy.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.picEnemy.Location = new System.Drawing.Point(687, 121);
-            this.picEnemy.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.picEnemy.Margin = new System.Windows.Forms.Padding(4);
             this.picEnemy.Name = "picEnemy";
             this.picEnemy.Size = new System.Drawing.Size(304, 328);
             this.picEnemy.TabIndex = 1;
@@ -131,7 +131,7 @@
             this.picPlayer.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.picPlayer.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.picPlayer.Location = new System.Drawing.Point(93, 121);
-            this.picPlayer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.picPlayer.Margin = new System.Windows.Forms.Padding(4);
             this.picPlayer.Name = "picPlayer";
             this.picPlayer.Size = new System.Drawing.Size(304, 328);
             this.picPlayer.TabIndex = 0;
@@ -229,7 +229,7 @@
             this.Controls.Add(this.picEnemy);
             this.Controls.Add(this.picPlayer);
             this.DoubleBuffered = true;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FrmBattle";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Fight!";

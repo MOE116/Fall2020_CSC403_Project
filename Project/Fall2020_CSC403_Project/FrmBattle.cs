@@ -15,7 +15,8 @@ namespace Fall2020_CSC403_Project
         private Enemy enemy;
         private Player player;
         private int healCount = 0;   //Heal count for heal button added
-                                  
+        private FrmGameOver gameover;                                               // gameover
+
         private static int characterbattle;
         private List<string> texts = new List<string> {"3", "2", "X" }; //numbers for the AdClose textbox to loop through
         private int currentIndex = 0;
@@ -99,6 +100,7 @@ namespace Fall2020_CSC403_Project
             }
 
         }
+        public static int KillEnemy = 0;                                                                // gameover
 
         private void btnAttack_Click(object sender, EventArgs e)
         {
@@ -113,10 +115,23 @@ namespace Fall2020_CSC403_Project
             }
 
             UpdateHealthBars();
-            if (player.Health <= 0 || enemy.Health <= 0)
+            if (enemy.Health <= 0)
+            {
+                instance = null;
+                KillEnemy++;
+                Close();
+                if (KillEnemy == 3)                                                                        //calling gameover
+                {
+                    gameover = FrmGameOver.GetInstance();
+                    gameover.Show();
+                }
+            }
+            if (player.Health <= 0)
             {
                 instance = null;
                 Close();
+                gameover = FrmGameOver.GetInstance();
+                gameover.Show();
             }
         }
 
@@ -129,7 +144,12 @@ namespace Fall2020_CSC403_Project
         private void PlayerDamage(int amount)
         {
             player.AlterHealth(amount);
+            if (FrmLevel.frmlevel != null)
+            {
+                FrmLevel.frmlevel.UpdatePlayerStatus(player.Health, player.MaxHealth);
+            }
         }
+
 
         private void tmrFinalBattle_Tick(object sender, EventArgs e)
         {
@@ -230,9 +250,13 @@ namespace Fall2020_CSC403_Project
                 player.AlterHealth(4);
                 UpdateHealthBars();
                 healCount++;
-
+            }
+                FrmLevel.frmlevel.UpdatePlayerStatus(player.Health, player.MaxHealth);
             }
         }
+        private void FrmBattle_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            FrmLevel.frmlevel.UpdatePlayerStatus(player.Health, player.MaxHealth);
         }
 
         private void FrmBattle_Load(object sender, EventArgs e)

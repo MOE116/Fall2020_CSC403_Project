@@ -15,15 +15,20 @@ namespace Fall2020_CSC403_Project {
       
     private Enemy enemyPoisonPacket;
     private Enemy bossKoolaid;
+        private FrmBattle frmbattle;
     private Enemy enemyCheeto;
     private Character[] walls;
         private bool hasKnife = false;
         private DateTime timeBegin;
     private FrmBattle frmBattle;
     private bool isPaused = false;         // Pause button
+    public StopwatchHelper stopwatchHelper;// for pausing timer
     private FrmTutorial frmTutorial;
     private static bool isBackgroundMusicPlaying = false;
     private FrmMainMenu mainMenuForm; // Add a reference to the FrmMainMenu form
+        public static FrmLevel frmlevel = null;                                         // to refer in FrmBattle.cs
+
+
 
 
         //Tutorial form
@@ -31,8 +36,11 @@ namespace Fall2020_CSC403_Project {
         {
             InitializeComponent();
             this.mainMenuForm = mainMenuForm; // Initialize the reference to FrmMainMenu
+            stopwatchHelper = new StopwatchHelper();
+            stopwatchHelper.Start();
+
         }
-    private void FrmLevel_FormClosing(object sender, FormClosingEventArgs e)
+        private void FrmLevel_FormClosing(object sender, FormClosingEventArgs e)
     {
         // Stop background music and close the FrmMainMenu form when FrmLevel is closing
         MusicSettings.StopBackgroundMusic();
@@ -89,8 +97,7 @@ namespace Fall2020_CSC403_Project {
 
 
             Game.player = player;
-      timeBegin = DateTime.Now;
-
+            timeBegin = DateTime.Now;
             frmTutorial = new FrmTutorial();                   // Tutorial Form
             frmTutorial.TopMost = true;
             frmTutorial.Show();
@@ -117,13 +124,13 @@ namespace Fall2020_CSC403_Project {
         private void tmrUpdateInGameTime_Tick(object sender, EventArgs e)
         {
             TimeSpan span = DateTime.Now - timeBegin;
-            string time = span.ToString(@"hh\:mm\:ss");
-            lblInGameTime.Text = "Time: " + time.ToString();
+            string elapsedTimeString = stopwatchHelper.GetElapsedTimeString(); //stopwatchHelper.Reset();
+            lblInGameTime.Text = "Time: " + elapsedTimeString;
         }
 
 
 
-    private void tmrPlayerMove_Tick(object sender, EventArgs e) {
+        private void tmrPlayerMove_Tick(object sender, EventArgs e) {
       // move player
       player.Move();
 
@@ -215,6 +222,8 @@ namespace Fall2020_CSC403_Project {
                     }
                 }
             };
+            UpdatePlayerStatus(player.Health, player.MaxHealth);
+
         }
 
         private void RemoveEnemy(PictureBox enemyPic)
@@ -237,6 +246,14 @@ namespace Fall2020_CSC403_Project {
 
             return true;
         }
+        public void UpdatePlayerStatus(int Health, int MaxHealth)
+        {
+            float playerHealthPer = Health / (float)MaxHealth;
+            const int MAX_HEALTHBAR_WIDTH = 151;
+            lblPlayerHealthFull.Width = (int)(MAX_HEALTHBAR_WIDTH * playerHealthPer);
+            lblPlayerHealthFull.Text = "player health" + Health.ToString();
+        }
+
 
 
 
@@ -277,14 +294,13 @@ namespace Fall2020_CSC403_Project {
         {
             if (!isPaused)
             {
-                tmrUpdateInGameTime.Stop();
-
+                stopwatchHelper.Stop();
                 tmrPlayerMove.Stop();
                 button1.Text = "PLAY";
             }
             else
             {
-                tmrUpdateInGameTime.Start();
+                stopwatchHelper.Start();
                 tmrPlayerMove.Start();
                 button1.Text = "PAUSE";
             }

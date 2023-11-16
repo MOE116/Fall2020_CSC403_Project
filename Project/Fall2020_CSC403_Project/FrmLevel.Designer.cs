@@ -53,6 +53,8 @@
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.picKnife = new System.Windows.Forms.PictureBox();
             this.MainMenuLbl = new System.Windows.Forms.Label();
+            this.lblPlayerHealthFull = new System.Windows.Forms.Label();
+
             ((System.ComponentModel.ISupportInitialize)(this.picEnemyCheeto)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picEnemyPoisonPacket)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picWall3)).BeginInit();
@@ -91,6 +93,18 @@
             this.lblInGameTime.TabIndex = 2;
             this.lblInGameTime.Text = "label1";
             this.lblInGameTime.Click += new System.EventHandler(this.lblInGameTime_Click);
+            // 
+            // lblPlayerHealthFull
+            // 
+            this.lblPlayerHealthFull.BackColor = System.Drawing.Color.Blue;
+            this.lblPlayerHealthFull.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPlayerHealthFull.ForeColor = System.Drawing.Color.White;
+            this.lblPlayerHealthFull.Location = new System.Drawing.Point(424, 35);
+            this.lblPlayerHealthFull.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblPlayerHealthFull.Name = "lblPlayerHealthFull";
+            this.lblPlayerHealthFull.Size = new System.Drawing.Size(227, 28);
+            this.lblPlayerHealthFull.TabIndex = 3;
+            // 
             // 
             // tmrUpdateInGameTime
             // 
@@ -435,6 +449,7 @@
             this.Controls.Add(this.picWall3);
             this.Controls.Add(this.picBossKoolAid);
             this.Controls.Add(this.picPlayer);
+            this.Controls.Add(this.lblPlayerHealthFull);
             this.DoubleBuffered = true;
             this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "FrmLevel";
@@ -503,6 +518,7 @@
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.PictureBox picKnife;
         private System.Windows.Forms.Label MainMenuLbl;
+        private System.Windows.Forms.Label lblPlayerHealthFull;
     }
 }
 
