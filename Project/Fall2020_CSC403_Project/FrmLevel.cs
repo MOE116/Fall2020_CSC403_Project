@@ -291,5 +291,16 @@ namespace Fall2020_CSC403_Project {
             isPaused = !isPaused;
         }
 
+        private void MainMenuLbl_Click(object sender, EventArgs e)
+        {
+            DialogResult MainMenuDialogue = MessageBox.Show("You will lose all progress, do you still wish to continue?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (MainMenuDialogue == DialogResult.Yes)
+            {
+                this.Close();
+                Application.Restart();
+                
+                
+            }
+        }
     }
 }

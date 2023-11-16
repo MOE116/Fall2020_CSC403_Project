@@ -36,6 +36,7 @@ namespace Fall2020_CSC403_Project
             // Start the timer when the form loads
             scrollTimer.Start();
             // Play background music for the main menu
+            MusicSettings.StopBackgroundMusic();
             MusicSettings.PlayBackgroundMusicMainMenu();
         }
         private void scrollTimer_Tick(object sender, EventArgs e)
