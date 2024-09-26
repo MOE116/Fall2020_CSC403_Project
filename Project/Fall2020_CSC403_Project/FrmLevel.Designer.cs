@@ -52,8 +52,12 @@
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.picKnife = new System.Windows.Forms.PictureBox();
+
+            this.MainMenuLbl = new System.Windows.Forms.Label();
+
             this.lblPlayerHealthFull = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+
             ((System.ComponentModel.ISupportInitialize)(this.picEnemyCheeto)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picEnemyPoisonPacket)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picWall3)).BeginInit();
@@ -361,7 +365,9 @@
             this.pictureBox4.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox4.BackgroundImage = global::Fall2020_CSC403_Project.Properties.Resources.wall;
             this.pictureBox4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+
             this.pictureBox4.Location = new System.Drawing.Point(1348, 2);
+
             this.pictureBox4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pictureBox4.Name = "pictureBox4";
             this.pictureBox4.Size = new System.Drawing.Size(553, 82);
@@ -390,6 +396,19 @@
             this.picKnife.TabIndex = 24;
             this.picKnife.TabStop = false;
             // 
+
+            // MainMenuLbl
+            // 
+            this.MainMenuLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MainMenuLbl.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.MainMenuLbl.Location = new System.Drawing.Point(1714, 2);
+            this.MainMenuLbl.Name = "MainMenuLbl";
+            this.MainMenuLbl.Size = new System.Drawing.Size(152, 49);
+            this.MainMenuLbl.TabIndex = 25;
+            this.MainMenuLbl.Text = "Main Menu";
+            this.MainMenuLbl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.MainMenuLbl.Click += new System.EventHandler(this.MainMenuLbl_Click);
+
             // lblPlayerHealthFull
             // 
             this.lblPlayerHealthFull.BackColor = System.Drawing.Color.Tomato;
@@ -413,6 +432,7 @@
             this.label1.TabIndex = 25;
             this.label1.Text = "HEALTH";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+
             // 
             // FrmLevel
             // 
@@ -422,7 +442,11 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1924, 1040);
+
+            this.Controls.Add(this.MainMenuLbl);
+
             this.Controls.Add(this.label1);
+
             this.Controls.Add(this.picKnife);
             this.Controls.Add(this.lblPlayerHealthFull);
             this.Controls.Add(this.pictureBox3);
@@ -516,8 +540,12 @@
         private System.Windows.Forms.PictureBox pictureBox4;
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.PictureBox picKnife;
+
+        private System.Windows.Forms.Label MainMenuLbl;
+
         private System.Windows.Forms.Label lblPlayerHealthFull;
         private System.Windows.Forms.Label label1;
+
     }
 }
 

@@ -10,27 +10,42 @@ namespace Fall2020_CSC403_Project
 {
     public static class MusicSettings
     {
-        public static SoundPlayer bgMusicPlayer;
+        public static SoundPlayer bgMusicPlayerMainMenu;
+        public static SoundPlayer bgMusicPlayerLevel;
         private static bool isBackgroundMusicPlaying = false;
 
         static MusicSettings()
         {
             // Initialize the background music player
-            bgMusicPlayer = new System.Media.SoundPlayer(Resources.ShootToThrill); // Replace with the actual resource name
+            bgMusicPlayerMainMenu = new SoundPlayer(Resources.paintheme);
+            bgMusicPlayerLevel = new SoundPlayer(Resources.ShootToThrill); // Replace with the actual resource name
         }
-        public static void PlayBackgroundMusic()
+        public static void PlayBackgroundMusicMainMenu()
         {
-            if (bgMusicPlayer != null && !isBackgroundMusicPlaying )
+            if (bgMusicPlayerMainMenu != null && !isBackgroundMusicPlaying)
             {
-                bgMusicPlayer.PlayLooping();
+                bgMusicPlayerMainMenu.PlayLooping();
+                isBackgroundMusicPlaying = true;
+            }
+        }
+        public static void PlayBackgroundMusicLevel()
+        {
+            if (bgMusicPlayerLevel != null && !isBackgroundMusicPlaying)
+            {
+                bgMusicPlayerLevel.PlayLooping();
                 isBackgroundMusicPlaying = true;
             }
         }
         public static void StopBackgroundMusic()
         {
-            if (bgMusicPlayer != null && isBackgroundMusicPlaying )
+            if (bgMusicPlayerMainMenu != null && isBackgroundMusicPlaying)
             {
-                bgMusicPlayer.Stop();
+                bgMusicPlayerMainMenu.Stop();
+                isBackgroundMusicPlaying = false;
+            }
+            if (bgMusicPlayerLevel != null && isBackgroundMusicPlaying)
+            {
+                bgMusicPlayerLevel.Stop();
                 isBackgroundMusicPlaying = false;
             }
         }

@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Collections.Generic;
 using System.Linq;
 
+
 namespace Fall2020_CSC403_Project {
   public partial class FrmLevel : Form {
     private Player player;
@@ -22,9 +23,15 @@ namespace Fall2020_CSC403_Project {
     private bool isPaused = false;         // Pause button
     private FrmTutorial frmTutorial;
     private static bool isBackgroundMusicPlaying = false;
-        public static FrmLevel frmlevel;
-   
+ public static FrmLevel frmlevel;
+    private FrmMainMenu mainMenuForm; // Add a reference to the FrmMainMenu form
 
+
+        //Tutorial form
+        public FrmLevel(FrmMainMenu mainMenuForm)
+        {
+            InitializeComponent();
+            this.mainMenuForm = mainMenuForm; // Initialize the reference to FrmMainMenu
 
         //Tutorial form
         public FrmLevel()
@@ -33,26 +40,36 @@ namespace Fall2020_CSC403_Project {
             frmlevel = this;
        stopwatchHelper = new StopwatchHelper();
        stopwatchHelper.Start();
+
         }
+    private void FrmLevel_FormClosing(object sender, FormClosingEventArgs e)
+    {
+        // Stop background music and close the FrmMainMenu form when FrmLevel is closing
+        MusicSettings.StopBackgroundMusic();
+        mainMenuForm.Close();
+    }
       private void FrmLevel_Load(object sender, EventArgs e) {
       const int PADDING = 7;
       const int NUM_WALLS = 19;
+        MusicSettings.StopBackgroundMusic();
+        MusicSettings.PlayBackgroundMusicLevel();
+            // Wire up the FormClosing event
+            this.FormClosing += FrmLevel_FormClosing;        
 
-            MusicSettings.PlayBackgroundMusic();
 
-                player = new Player(CreatePosition(picPlayer), CreateCollider(picPlayer, PADDING));
-                bossKoolaid = new Enemy(CreatePosition(picBossKoolAid), CreateCollider(picBossKoolAid, PADDING));
-                enemyPoisonPacket = new Enemy(CreatePosition(picEnemyPoisonPacket), CreateCollider(picEnemyPoisonPacket, PADDING));
-                enemyCheeto = new Enemy(CreatePosition(picEnemyCheeto), CreateCollider(picEnemyCheeto, PADDING));
-       
+            player = new Player(CreatePosition(picPlayer), CreateCollider(picPlayer, PADDING));
+            bossKoolaid = new Enemy(CreatePosition(picBossKoolAid), CreateCollider(picBossKoolAid, PADDING));
+            enemyPoisonPacket = new Enemy(CreatePosition(picEnemyPoisonPacket), CreateCollider(picEnemyPoisonPacket, PADDING));
+            enemyCheeto = new Enemy(CreatePosition(picEnemyCheeto), CreateCollider(picEnemyCheeto, PADDING));
 
-      bossKoolaid.Img = picBossKoolAid.BackgroundImage;
-      enemyPoisonPacket.Img = picEnemyPoisonPacket.BackgroundImage;
-      enemyCheeto.Img = picEnemyCheeto.BackgroundImage;
 
-      bossKoolaid.Color = Color.Red;
-      enemyPoisonPacket.Color = Color.Green;
-      enemyCheeto.Color = Color.MediumPurple;
+            bossKoolaid.Img = picBossKoolAid.BackgroundImage;
+            enemyPoisonPacket.Img = picEnemyPoisonPacket.BackgroundImage;
+            enemyCheeto.Img = picEnemyCheeto.BackgroundImage;
+
+            bossKoolaid.Color = Color.Red;
+            enemyPoisonPacket.Color = Color.Green;
+            enemyCheeto.Color = Color.MediumPurple;
 
             //enemyCheeto.Color = Color.FromArgb(255, 245, 161);
 
@@ -90,25 +107,31 @@ namespace Fall2020_CSC403_Project {
             frmTutorial.Show();
 
         }
-    
-    private Vector2 CreatePosition(PictureBox pic) {
-      return new Vector2(pic.Location.X, pic.Location.Y);
-    }
 
-    private Collider CreateCollider(PictureBox pic, int padding) {
-      Rectangle rect = new Rectangle(pic.Location, new Size(pic.Size.Width - padding, pic.Size.Height - padding));
-      return new Collider(rect);
-    }
+        private Vector2 CreatePosition(PictureBox pic)
+        {
+            return new Vector2(pic.Location.X, pic.Location.Y);
+        }
 
-    private void FrmLevel_KeyUp(object sender, KeyEventArgs e) {
-      player.ResetMoveSpeed();
-    }
+        private Collider CreateCollider(PictureBox pic, int padding)
+        {
+            Rectangle rect = new Rectangle(pic.Location, new Size(pic.Size.Width - padding, pic.Size.Height - padding));
+            return new Collider(rect);
+        }
 
+        private void FrmLevel_KeyUp(object sender, KeyEventArgs e)
+        {
+            player.ResetMoveSpeed();
+        }
+
+
+      
     private void tmrUpdateInGameTime_Tick(object sender, EventArgs e) {
     string elapsedTimeString = stopwatchHelper.GetElapsedTimeString(); //stopwatchHelper.Reset();
     lblInGameTime.Text = "Time: " + elapsedTimeString;
 
         }
+
 
         private void tmrPlayerMove_Tick(object sender, EventArgs e) {
       // move player
@@ -260,15 +283,15 @@ namespace Fall2020_CSC403_Project {
                 default:
                     player.ResetMoveSpeed();
                     break;
-            
             }
         }
 
+        private void lblInGameTime_Click(object sender, EventArgs e)
+        {
 
-        private void lblInGameTime_Click(object sender, EventArgs e) {
+        }
 
-    }
-       
+
 
         private void button1_Click(object sender, EventArgs e)              //Pause button
         {
@@ -287,5 +310,16 @@ namespace Fall2020_CSC403_Project {
             isPaused = !isPaused;
         }
 
+        private void MainMenuLbl_Click(object sender, EventArgs e)
+        {
+            DialogResult MainMenuDialogue = MessageBox.Show("You will lose all progress, do you still wish to continue?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (MainMenuDialogue == DialogResult.Yes)
+            {
+                this.Close();
+                Application.Restart();
+                
+                
+            }
+        }
     }
 }
