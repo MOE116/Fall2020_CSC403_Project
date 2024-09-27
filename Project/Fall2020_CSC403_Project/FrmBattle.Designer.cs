@@ -33,17 +33,22 @@
             this.picEnemy = new System.Windows.Forms.PictureBox();
             this.picPlayer = new System.Windows.Forms.PictureBox();
             this.tmrFinalBattle = new System.Windows.Forms.Timer(this.components);
+            this.FleeButton = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.Healbtn = new System.Windows.Forms.Button();
+            this.AdPanel = new System.Windows.Forms.Panel();
+            this.AdClose = new System.Windows.Forms.TextBox();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.picBossBattle)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picEnemy)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picPlayer)).BeginInit();
+            this.AdPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnAttack
             // 
             this.btnAttack.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAttack.Location = new System.Drawing.Point(169, 519);
+            this.btnAttack.Location = new System.Drawing.Point(457, 156);
             this.btnAttack.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnAttack.Name = "btnAttack";
             this.btnAttack.Size = new System.Drawing.Size(171, 53);
@@ -101,7 +106,7 @@
             this.picBossBattle.Location = new System.Drawing.Point(1040, 693);
             this.picBossBattle.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.picBossBattle.Name = "picBossBattle";
-            this.picBossBattle.Size = new System.Drawing.Size(40, 34);
+            this.picBossBattle.Size = new System.Drawing.Size(40, 33);
             this.picBossBattle.TabIndex = 7;
             this.picBossBattle.TabStop = false;
             this.picBossBattle.Visible = false;
@@ -137,25 +142,72 @@
             this.tmrFinalBattle.Interval = 5600;
             this.tmrFinalBattle.Tick += new System.EventHandler(this.tmrFinalBattle_Tick);
             // 
+            // FleeButton
+            // 
+            this.FleeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FleeButton.Location = new System.Drawing.Point(457, 241);
+            this.FleeButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.FleeButton.Name = "FleeButton";
+            this.FleeButton.Size = new System.Drawing.Size(171, 49);
+            this.FleeButton.TabIndex = 8;
+            this.FleeButton.Text = "Flee";
+            this.FleeButton.UseVisualStyleBackColor = true;
+            this.FleeButton.Click += new System.EventHandler(this.FleeButton_Click);
+            // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(0, 0);
+            this.button1.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.ForeColor = System.Drawing.Color.Red;
+            this.button1.Location = new System.Drawing.Point(955, 11);
+            this.button1.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 8;
-            this.button1.Text = "button1";
+            this.button1.Size = new System.Drawing.Size(129, 38);
+            this.button1.TabIndex = 9;
+            this.button1.Text = "GAME EXIT";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // button2
+            // Healbtn
             // 
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
-            this.button2.Location = new System.Drawing.Point(169, 603);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(170, 53);
-            this.button2.TabIndex = 9;
-            this.button2.Text = "HEAL";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.Healbtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
+            this.Healbtn.Location = new System.Drawing.Point(457, 331);
+            this.Healbtn.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
+            this.Healbtn.Name = "Healbtn";
+            this.Healbtn.Size = new System.Drawing.Size(171, 44);
+            this.Healbtn.TabIndex = 10;
+            this.Healbtn.Text = "HEAL";
+            this.Healbtn.UseVisualStyleBackColor = true;
+            this.Healbtn.Click += new System.EventHandler(this.Healbtn_Click);
+            // 
+            // AdPanel
+            // 
+            this.AdPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.AdPanel.Controls.Add(this.AdClose);
+            this.AdPanel.Location = new System.Drawing.Point(89, 74);
+            this.AdPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.AdPanel.Name = "AdPanel";
+            this.AdPanel.Size = new System.Drawing.Size(908, 433);
+            this.AdPanel.TabIndex = 11;
+            this.AdPanel.Click += new System.EventHandler(this.advertisingPanel_Click);
+            // 
+            // AdClose
+            // 
+            this.AdClose.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.AdClose.Dock = System.Windows.Forms.DockStyle.Right;
+            this.AdClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.AdClose.Location = new System.Drawing.Point(873, 0);
+            this.AdClose.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.AdClose.Name = "AdClose";
+            this.AdClose.Size = new System.Drawing.Size(35, 34);
+            this.AdClose.TabIndex = 0;
+            this.AdClose.Text = "X";
+            this.AdClose.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.AdClose.Click += new System.EventHandler(this.AdClose_Click);
+            // 
+            // timer1
+            // 
+            this.timer1.Interval = 750;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // FrmBattle
             // 
@@ -163,15 +215,17 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Green;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(1096, 742);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.ClientSize = new System.Drawing.Size(1096, 676);
+            this.Controls.Add(this.AdPanel);
             this.Controls.Add(this.picBossBattle);
             this.Controls.Add(this.lblEnemyHealthFull);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.lblPlayerHealthFull);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnAttack);
+            this.Controls.Add(this.Healbtn);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.FleeButton);
             this.Controls.Add(this.picEnemy);
             this.Controls.Add(this.picPlayer);
             this.DoubleBuffered = true;
@@ -179,9 +233,12 @@
             this.Name = "FrmBattle";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Fight!";
+            this.Load += new System.EventHandler(this.FrmBattle_Load);
             ((System.ComponentModel.ISupportInitialize)(this.picBossBattle)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picEnemy)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picPlayer)).EndInit();
+            this.AdPanel.ResumeLayout(false);
+            this.AdPanel.PerformLayout();
             this.ResumeLayout(false);
 
     }
@@ -197,7 +254,11 @@
     private System.Windows.Forms.Label lblEnemyHealthFull;
     private System.Windows.Forms.PictureBox picBossBattle;
     private System.Windows.Forms.Timer tmrFinalBattle;
+        private System.Windows.Forms.Button FleeButton;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button Healbtn;
+        private System.Windows.Forms.Panel AdPanel;
+        private System.Windows.Forms.TextBox AdClose;
+        private System.Windows.Forms.Timer timer1;
     }
 }
